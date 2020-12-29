@@ -19,8 +19,6 @@ $ npm i -S @tadashi/tooltip-webcomponent
 
 ## Usage
 
-You can see an example more complex here: https://svelte.dev/repl/f8ab96519a874208be8e3f6295d040b0?version=3.29.4
-
 ```html
 <script
 	type="module"
