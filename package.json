@@ -18,6 +18,7 @@
   ],
   "files": [
     "dist",
+    "src",
     "README.md"
   ],
   "svelte": "src/components/Tooltip.svelte",
