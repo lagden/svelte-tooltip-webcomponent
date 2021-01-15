@@ -21,28 +21,35 @@
 				color: blue;
 			}
 
-			tadashi-tooltip {
+			.tooltip {
 				position: relative;
 				z-index: 999;
 				--fillColor: hsla(0, 100%, 100%, 1);
+				--width: 400px;
 			}
 		</style>
 	</head>
 
 	<body>
 		<a-element>
-			<tadashi-tooltip right="true">Ajuda aqui</tadashi-tooltip>
+			<tadashi-tooltip right="true">Mussum Ipsum, cacilds vidis litro abertis. Suco de cevadiss deixa as pessoas mais interessantis</tadashi-tooltip>
 			<p>Mussum Ipsum, cacilds vidis litro abertis</p>
 			<b-element>:)</b-element>
 		</a-element>
 
 		<a-element exemplo="Ohh Yeahh!">
-			<tadashi-tooltip>
+			<tadashi-tooltip right="true" class="tooltip">
 				<h3>Yeahh</h3>
 				<p>lorem ipsum.</p>
 			</tadashi-tooltip>
 			<p>Suco de cevadiss deixa as pessoas mais interessantis</p>
 			<b-element>:o)</b-element>
+		</a-element>
+
+		<a-element>
+			<tadashi-tooltip size="100" right="true">Mussum Ipsum, cacilds vidis litro abertis. Suco de cevadiss deixa as pessoas mais interessantis</tadashi-tooltip>
+			<p>Agora é sizee</p>
+			<b-element>:)</b-element>
 		</a-element>
 
 		<script>

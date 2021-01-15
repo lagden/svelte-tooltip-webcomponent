@@ -60,9 +60,6 @@ function xlink_attr(node, attribute, value) {
 function children(element) {
     return Array.from(element.childNodes);
 }
-function set_style(node, key, value, important) {
-    node.style.setProperty(key, value, important ? 'important' : '');
-}
 // unfortunately this can't be a constant as that wouldn't be tree-shakeable
 // so we cache the result instead
 let crossorigin;
@@ -392,38 +389,42 @@ function validate_slots(name, slot, keys) {
 
 const file = "src/components/Tooltip.svelte";
 
-// (58:1) {#if show}
+// (65:1) {#if show}
 function create_if_block(ctx) {
 	let div;
 	let slot;
+	let div_style_value;
 	let div_resize_listener;
 
 	const block = {
 		c: function create() {
 			div = element("div");
 			slot = element("slot");
-			add_location(slot, file, 64, 3, 1781);
+			add_location(slot, file, 71, 3, 1894);
 			attr_dev(div, "class", "__tooltip_message");
-			set_style(div, "top", /*_top*/ ctx[8] + "px");
-			set_style(div, "left", /*_left*/ ctx[9] + "px");
-			add_render_callback(() => /*div_elementresize_handler*/ ctx[14].call(div));
+			attr_dev(div, "style", div_style_value = "top: " + /*_top*/ ctx[9] + "px; left: " + /*_left*/ ctx[10] + "px; " + /*_style*/ ctx[8]);
+			add_render_callback(() => /*div_elementresize_handler*/ ctx[16].call(div));
 			toggle_class(div, "__tooltip_message--right", /*right*/ ctx[0]);
-			add_location(div, file, 58, 2, 1593);
+			add_location(div, file, 65, 2, 1696);
 		},
 		m: function mount(target, anchor) {
 			insert_dev(target, div, anchor);
 			append_dev(div, slot);
-			/*div_binding*/ ctx[13](div);
-			div_resize_listener = add_resize_listener(div, /*div_elementresize_handler*/ ctx[14].bind(div));
+			/*div_binding*/ ctx[15](div);
+			div_resize_listener = add_resize_listener(div, /*div_elementresize_handler*/ ctx[16].bind(div));
 		},
 		p: function update(ctx, dirty) {
+			if (dirty & /*_style*/ 256 && div_style_value !== (div_style_value = "top: " + /*_top*/ ctx[9] + "px; left: " + /*_left*/ ctx[10] + "px; " + /*_style*/ ctx[8])) {
+				attr_dev(div, "style", div_style_value);
+			}
+
 			if (dirty & /*right*/ 1) {
 				toggle_class(div, "__tooltip_message--right", /*right*/ ctx[0]);
 			}
 		},
 		d: function destroy(detaching) {
 			if (detaching) detach_dev(div);
-			/*div_binding*/ ctx[13](null);
+			/*div_binding*/ ctx[15](null);
 			div_resize_listener();
 		}
 	};
@@ -432,7 +433,7 @@ function create_if_block(ctx) {
 		block,
 		id: create_if_block.name,
 		type: "if",
-		source: "(58:1) {#if show}",
+		source: "(65:1) {#if show}",
 		ctx
 	});
 
@@ -468,27 +469,27 @@ function create_fragment(ctx) {
 			if (if_block) if_block.c();
 			this.c = noop;
 			attr_dev(path, "d", "M15.047 10.266c0.563-0.563 0.938-1.359 0.938-2.25 0-2.203-1.781-4.031-3.984-4.031s-3.984 1.828-3.984 4.031h1.969c0-1.078 0.938-2.016 2.016-2.016s2.016 0.938 2.016 2.016c0 0.563-0.234 1.031-0.609 1.406l-1.219 1.266c-0.703 0.75-1.172 1.734-1.172 2.813v0.516h1.969c0-1.5 0.469-2.109 1.172-2.859zM12.984 18v-2.016h-1.969v2.016h1.969zM18.984 2.016c1.078 0 2.016 0.891 2.016 1.969v14.016c0 1.078-0.938 2.016-2.016 2.016h-3.984l-3 3-3-3h-3.984c-1.125 0-2.016-0.938-2.016-2.016v-14.016c0-1.078 0.891-1.969 2.016-1.969h13.969z");
-			add_location(path, file, 39, 2, 766);
+			add_location(path, file, 46, 2, 869);
 			attr_dev(symbol, "id", "live_help");
 			attr_dev(symbol, "viewBox", "0 0 24 24");
-			add_location(symbol, file, 38, 1, 720);
+			add_location(symbol, file, 45, 1, 823);
 			attr_dev(svg0, "width", "0");
 			attr_dev(svg0, "height", "0");
 			attr_dev(svg0, "display", "none");
 			attr_dev(svg0, "version", "1.1");
 			attr_dev(svg0, "aria-hidden", "true");
 			attr_dev(svg0, "focusable", "false");
-			add_location(svg0, file, 37, 0, 626);
+			add_location(svg0, file, 44, 0, 729);
 			xlink_attr(use, "xlink:href", "#live_help");
-			add_location(use, file, 53, 3, 1526);
+			add_location(use, file, 60, 3, 1629);
 			attr_dev(svg1, "class", "__tooltip_ballon");
-			add_location(svg1, file, 52, 2, 1492);
+			add_location(svg1, file, 59, 2, 1595);
 			attr_dev(button, "type", "button");
 			attr_dev(button, "class", "__tooltip_trigger");
-			add_render_callback(() => /*button_elementresize_handler*/ ctx[12].call(button));
-			add_location(button, file, 44, 1, 1346);
+			add_render_callback(() => /*button_elementresize_handler*/ ctx[14].call(button));
+			add_location(button, file, 51, 1, 1449);
 			attr_dev(div, "class", "__tooltip");
-			add_location(div, file, 43, 0, 1321);
+			add_location(div, file, 50, 0, 1424);
 		},
 		l: function claim(nodes) {
 			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -502,13 +503,13 @@ function create_fragment(ctx) {
 			append_dev(div, button);
 			append_dev(button, svg1);
 			append_dev(svg1, use);
-			/*button_binding*/ ctx[11](button);
-			button_resize_listener = add_resize_listener(button, /*button_elementresize_handler*/ ctx[12].bind(button));
+			/*button_binding*/ ctx[13](button);
+			button_resize_listener = add_resize_listener(button, /*button_elementresize_handler*/ ctx[14].bind(button));
 			append_dev(div, t1);
 			if (if_block) if_block.m(div, null);
 
 			if (!mounted) {
-				dispose = listen_dev(button, "click", /*toggle*/ ctx[10], false, false, false);
+				dispose = listen_dev(button, "click", /*toggle*/ ctx[11], false, false, false);
 				mounted = true;
 			}
 		},
@@ -532,7 +533,7 @@ function create_fragment(ctx) {
 			if (detaching) detach_dev(svg0);
 			if (detaching) detach_dev(t0);
 			if (detaching) detach_dev(div);
-			/*button_binding*/ ctx[11](null);
+			/*button_binding*/ ctx[13](null);
 			button_resize_listener();
 			if (if_block) if_block.d();
 			mounted = false;
@@ -555,6 +556,7 @@ function instance($$self, $$props, $$invalidate) {
 	let { $$slots: slots = {}, $$scope } = $$props;
 	validate_slots("tadashi-tooltip", slots, []);
 	let { right = false } = $$props;
+	let { size = false } = $$props;
 	let show = false;
 	let _top = 0;
 	let _left = 0;
@@ -564,6 +566,11 @@ function instance($$self, $$props, $$invalidate) {
 	let _h;
 	let btn;
 	let box;
+	let _style = "";
+
+	if (size !== false) {
+		_style = `--width: ${size}px;`;
+	}
 
 	// async function position() {
 	// 	await tick()
@@ -579,7 +586,7 @@ function instance($$self, $$props, $$invalidate) {
 		$$invalidate(1, show = !show);
 	} // await position()
 
-	const writable_props = ["right"];
+	const writable_props = ["right", "size"];
 
 	Object.keys($$props).forEach(key => {
 		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console.warn(`<tadashi-tooltip> was created with unknown prop '${key}'`);
@@ -615,10 +622,12 @@ function instance($$self, $$props, $$invalidate) {
 
 	$$self.$$set = $$props => {
 		if ("right" in $$props) $$invalidate(0, right = $$props.right);
+		if ("size" in $$props) $$invalidate(12, size = $$props.size);
 	};
 
 	$$self.$capture_state = () => ({
 		right,
+		size,
 		show,
 		_top,
 		_left,
@@ -628,20 +637,23 @@ function instance($$self, $$props, $$invalidate) {
 		_h,
 		btn,
 		box,
+		_style,
 		toggle
 	});
 
 	$$self.$inject_state = $$props => {
 		if ("right" in $$props) $$invalidate(0, right = $$props.right);
+		if ("size" in $$props) $$invalidate(12, size = $$props.size);
 		if ("show" in $$props) $$invalidate(1, show = $$props.show);
-		if ("_top" in $$props) $$invalidate(8, _top = $$props._top);
-		if ("_left" in $$props) $$invalidate(9, _left = $$props._left);
+		if ("_top" in $$props) $$invalidate(9, _top = $$props._top);
+		if ("_left" in $$props) $$invalidate(10, _left = $$props._left);
 		if ("_bw" in $$props) $$invalidate(2, _bw = $$props._bw);
 		if ("_bh" in $$props) $$invalidate(3, _bh = $$props._bh);
 		if ("_w" in $$props) $$invalidate(4, _w = $$props._w);
 		if ("_h" in $$props) $$invalidate(5, _h = $$props._h);
 		if ("btn" in $$props) $$invalidate(6, btn = $$props.btn);
 		if ("box" in $$props) $$invalidate(7, box = $$props.box);
+		if ("_style" in $$props) $$invalidate(8, _style = $$props._style);
 	};
 
 	if ($$props && "$$inject" in $$props) {
@@ -657,9 +669,11 @@ function instance($$self, $$props, $$invalidate) {
 		_h,
 		btn,
 		box,
+		_style,
 		_top,
 		_left,
 		toggle,
+		size,
 		button_binding,
 		button_elementresize_handler,
 		div_binding,
@@ -671,8 +685,8 @@ class Tooltip extends SvelteElement {
 	constructor(options) {
 		super();
 
-		this.shadowRoot.innerHTML = `<style>:host{--fillColor:hsla(0, 50%, 50%, 1);--bgColorBox:hsla(0, 0%, 0%, 0.7);--txtColorBox:hsla(0, 100%, 100%, 1);--gap:30px;--zindex:999}.__tooltip{position:relative}.__tooltip_trigger{width:30px;height:30px;padding:0;margin:0;border:0;outline:0;overflow:hidden;position:relative;cursor:pointer;background:none
-	}.__tooltip_ballon{width:1.5em;height:1.5em;cursor:pointer;fill:var(--fillColor)}.__tooltip_message{position:absolute;top:0;left:0;bottom:auto;right:auto;color:var(--txtColorBox);background-color:var(--bgColorBox);padding:1em;max-width:290px;max-height:320px;border-radius:5px;pointer-events:none;box-sizing:border-box;transform:translate(calc(-100% + var(--gap)), var(--gap));z-index:var(--zindex)}.__tooltip_message--right{transform:translate(0px, var(--gap))}</style>`;
+		this.shadowRoot.innerHTML = `<style>:host{--width:auto;--fillColor:hsla(0, 50%, 50%, 1);--bgColorBox:hsla(0, 0%, 0%, 0.7);--txtColorBox:hsla(0, 100%, 100%, 1);--gap:30px;--zindex:999}.__tooltip{position:relative}.__tooltip_trigger{width:30px;height:30px;padding:0;margin:0;border:0;outline:0;overflow:hidden;position:relative;cursor:pointer;background:none
+	}.__tooltip_ballon{width:1.5em;height:1.5em;cursor:pointer;fill:var(--fillColor)}.__tooltip_message{position:absolute;top:0;left:0;bottom:auto;right:auto;color:var(--txtColorBox);background-color:var(--bgColorBox);padding:1em;width:var(--width);height:auto;border-radius:5px;pointer-events:none;box-sizing:border-box;transform:translate(calc(-100% + var(--gap)), var(--gap));z-index:var(--zindex);overflow:auto}.__tooltip_message--right{transform:translate(0px, var(--gap))}</style>`;
 
 		init(
 			this,
@@ -683,7 +697,7 @@ class Tooltip extends SvelteElement {
 			instance,
 			create_fragment,
 			safe_not_equal,
-			{ right: 0 }
+			{ right: 0, size: 12 }
 		);
 
 		if (options) {
@@ -699,7 +713,7 @@ class Tooltip extends SvelteElement {
 	}
 
 	static get observedAttributes() {
-		return ["right"];
+		return ["right", "size"];
 	}
 
 	get right() {
@@ -708,6 +722,15 @@ class Tooltip extends SvelteElement {
 
 	set right(right) {
 		this.$set({ right });
+		flush();
+	}
+
+	get size() {
+		return this.$$.ctx[12];
+	}
+
+	set size(size) {
+		this.$set({ size });
 		flush();
 	}
 }

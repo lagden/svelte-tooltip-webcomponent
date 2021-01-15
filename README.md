@@ -25,7 +25,7 @@ $ npm i -S @tadashi/tooltip-webcomponent
 	src="./node_modules/@tadashi/tooltip-webcomponent/dist/Tooltip.js"
 ></script>
 
-<tadashi-tooltip right="true">Ajuda aqui</tadashi-tooltip>
+<tadashi-tooltip right="true" size="200">Ajuda aqui</tadashi-tooltip>
 ```
 
 

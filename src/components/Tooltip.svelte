@@ -4,6 +4,7 @@
 	// import {tick} from 'svelte'
 
 	export let right = false
+	export let size = false
 
 	let show = false
 
@@ -17,6 +18,12 @@
 
 	let btn
 	let box
+
+	let _style = ''
+
+	if (size !== false) {
+		_style = `--width: ${size}px;`
+	}
 
 	// async function position() {
 	// 	await tick()
@@ -58,7 +65,7 @@
 	{#if show}
 		<div
 			class="__tooltip_message"
-			style="top: {_top}px; left: {_left}px"
+			style="top: {_top}px; left: {_left}px; {_style}"
 			class:__tooltip_message--right={right}
 			bind:this={box}
 			bind:clientWidth={_w} bind:clientHeight={_h}
@@ -68,6 +75,7 @@
 
 <style>
 	:host {
+		--width: auto;
 		--fillColor: hsla(0, 50%, 50%, 1);
 		--bgColorBox: hsla(0, 0%, 0%, 0.7);
 		--txtColorBox: hsla(0, 100%, 100%, 1);
@@ -108,13 +116,14 @@
 		color: var(--txtColorBox);
 		background-color: var(--bgColorBox);
 		padding: 1em;
-		max-width: 290px;
-		max-height: 320px;
+		width: var(--width);
+		height: auto;
 		border-radius: 5px;
 		pointer-events: none;
 		box-sizing: border-box;
 		transform: translate(calc(-100% + var(--gap)), var(--gap));
 		z-index: var(--zindex);
+		overflow: auto;
 	}
 
 	.__tooltip_message--right {
