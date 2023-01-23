@@ -22,10 +22,17 @@ $ npm i -S @tadashi/tooltip-webcomponent
 ```html
 <script
 	type="module"
-	src="./node_modules/@tadashi/tooltip-webcomponent/dist/Tooltip.js"
+	src="https://unpkg.com/@tadashi/tooltip-webcomponent@{version}/dist/Tooltip.js"
 ></script>
 
-<tadashi-tooltip right="true" size="200">Ajuda aqui</tadashi-tooltip>
+<style>
+	.custom {
+		--width: 200px;
+		--fillColor: hsl(0deg 100% 100%);
+	}
+</style>
+
+<tadashi-tooltip right="true" class="custom">Ajuda aqui</tadashi-tooltip>
 ```
 
 

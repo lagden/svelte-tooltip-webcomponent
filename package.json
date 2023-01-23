@@ -1,6 +1,6 @@
 {
   "name": "@tadashi/tooltip-webcomponent",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Svelte component",
   "author": "Thiago Lagden",
   "license": "MIT",
@@ -21,22 +21,22 @@
     "src",
     "README.md"
   ],
+  "type": "module",
   "svelte": "src/components/Tooltip.svelte",
   "main": "dist/Tooltip.js",
   "scripts": {
     "build": "rollup -c",
-    "autobuild": "rollup -c -w",
-    "dev": "run-p start:dev autobuild",
-    "start": "sirv public --single",
-    "start:dev": "sirv public --single --dev"
+    "build:watch": "rollup -c -w",
+    "dev": "run-p start build:watch",
+    "start": "sirv public --single --dev"
   },
   "devDependencies": {
     "npm-run-all": "4.1.5",
-    "rollup": "2.35.1",
-    "@rollup/plugin-commonjs": "17.0.0",
-    "@rollup/plugin-node-resolve": "11.0.1",
-    "rollup-plugin-svelte": "7.0.0",
-    "sirv-cli": "1.0.10",
-    "svelte": "3.31.0"
+    "rollup": "3.10.1",
+    "@rollup/plugin-commonjs": "24.0.1",
+    "@rollup/plugin-node-resolve": "15.0.1",
+    "rollup-plugin-svelte": "7.1.0",
+    "sirv-cli": "2.0.2",
+    "svelte": "3.55.1"
   }
 }

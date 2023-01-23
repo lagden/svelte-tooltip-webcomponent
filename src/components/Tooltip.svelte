@@ -1,44 +1,20 @@
 <svelte:options tag="tadashi-tooltip" />
 
 <script>
-	// import {tick} from 'svelte'
-
 	export let right = false
-	export let size = false
 
-	let show = false
-
-	let _top = 0
-	let _left = 0
-
-	let _bw
-	let _bh
-	let _w
-	let _h
+	let className = ''
+	export {className as class}
 
 	let btn
 	let box
+	let show = false
 
-	let _style = ''
+	const boolRegex = /^(?:true|false|1|0)$/i
+	$: _right = boolRegex.test(String(right)) ? String(right).toLowerCase() === 'true' || right === '1' : false
 
-	if (size !== false) {
-		_style = `--width: ${size}px;`
-	}
-
-	// async function position() {
-	// 	await tick()
-	// 	console.log('_bw, _bh', _bw, _bh)
-	// 	console.log('_w, _h', _w, _h)
-	// 	console.log('btn', btn.getBoundingClientRect())
-	// 	console.log('globalThis.visualViewport', globalThis.visualViewport)
-	// 	if (box) {
-	// 		console.log('box', box.getBoundingClientRect())
-	// 	}
-	// }
-
-	async function toggle() {
+	function toggle() {
 		show = !show
-		// await position()
 	}
 </script>
 
@@ -48,13 +24,11 @@
 	</symbol>
 </svg>
 
-<div class="__tooltip">
+<div class="__tooltip {className}">
 	<button
 		type="button"
 		class="__tooltip_trigger"
 		bind:this={btn}
-		bind:clientWidth={_bw}
-		bind:clientHeight={_bh}
 		on:click={toggle}
 	>
 		<svg class="__tooltip_ballon">
@@ -65,16 +39,16 @@
 	{#if show}
 		<div
 			class="__tooltip_message"
-			style="top: {_top}px; left: {_left}px; {_style}"
-			class:__tooltip_message--right={right}
+			class:__tooltip_message--right={_right}
 			bind:this={box}
-			bind:clientWidth={_w} bind:clientHeight={_h}
 		><slot /></div>
 	{/if}
 </div>
 
 <style>
 	:host {
+		--top: 0;
+		--left: 0;
 		--width: auto;
 		--fillColor: hsla(0, 50%, 50%, 1);
 		--bgColorBox: hsla(0, 0%, 0%, 0.7);
@@ -109,8 +83,8 @@
 
 	.__tooltip_message {
 		position: absolute;
-		top: 0;
-		left: 0;
+		top: var(--top);
+		left: var(--left);
 		bottom: auto;
 		right: auto;
 		color: var(--txtColorBox);

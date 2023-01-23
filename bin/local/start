@@ -1,0 +1,95 @@
+#!/bin/bash
+
+DIR="$(cd $(dirname $0) && pwd)"
+BIN_DIR="$(cd $DIR/.. && pwd)"
+
+# Import functions
+. $BIN_DIR/helper/fn
+
+# Usage
+usage() {
+	cat <<-EOF
+
+  Usage: $0 [options...]
+
+  Options:
+    -e <development|staging|production>  Environment
+    -b                                   Build and run the application
+    -i                                   Ignore run
+    -h                                   Show usage
+
+EOF
+exit 2
+}
+
+# Go to current directory
+CURR_FOLDER="$(pwd)"
+cd $CURR_FOLDER
+
+unset BUILD_CMD
+BUILD_CMD=false
+
+unset IGNORE_RUN
+IGNORE_RUN=false
+
+unset BUILD
+BUILD=false
+
+unset OPT
+OPT="development"
+
+unset OPT_AVAILABLE
+OPT_AVAILABLE=("development" "staging" "production")
+
+while getopts "ibhe:" o
+do
+	case ${o} in
+		e) OPT=$OPTARG ;;
+		b) BUILD=true ;;
+		i) IGNORE_RUN=true ;;
+		h) usage ;;
+		\?) usage ;;
+	esac
+done
+
+# Check option available
+[[ ! " ${OPT_AVAILABLE[*]} " =~ " ${OPT} " ]] && usage
+
+# ENV File
+load_env $OPT
+
+# Generate ENVs for frontend application
+if test "${REQUIRE_GEN:-0}" = "1"; then
+	gen_env "${CURR_FOLDER}/resource/env.js"
+fi
+
+# Build and RUN
+if $BUILD; then
+
+	if $BUILD_CMD; then
+		ok "Building cmd: ${BUILD_CMD} ---> ${OPT}"
+		eval ${BUILD_CMD}
+		if test $? -ne 0; then
+			abort "Build failed"
+		fi
+	fi
+
+	if $IGNORE_RUN; then
+		exit 0
+	fi
+
+	eval ${RUN_CMD}
+	exit 0
+fi
+
+ok "Running cmd: ${WATCH_CMD}"
+
+# Watch
+eval ${WATCH_CMD}
+# $WATCH_CMD
+
+if test $? -ne 0; then
+	abort "Watch failed"
+fi
+
+exit 0
